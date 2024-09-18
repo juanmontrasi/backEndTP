@@ -1,6 +1,7 @@
 import express, { json } from 'express'
 import { createUserRouter } from './routes/users.js'
 import { createLoginRouter } from './routes/login.js'
+import { createproductsRouter } from './routes/products.js'
 
 export const createApp = ({ userModel }) => {
   const app = express()
@@ -9,6 +10,7 @@ export const createApp = ({ userModel }) => {
 
   app.use('/users', createUserRouter({ userModel }))
   app.use('/login', createLoginRouter({ userModel }))
+  app.use('/products', createproductsRouter({ productsModel }))
 
   const PORT = process.env.PORT ?? 1234
   app.listen(PORT, () => {
