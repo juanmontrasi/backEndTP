@@ -16,4 +16,4 @@ try {
   console.error('Unable to connect to the database:', error)
 }
 
-export default sequelize;
+export default sequelize

@@ -46,3 +46,16 @@ Content-Type: application/json
   "clave": "5678"
 }
 
+//// Requests de Pedidos
+### obtener todos los pedidos
+GET http://localhost:1234/orders
+
+### crear un pedido
+POST http://localhost:1234/orders
+Content-Type: application/json
+
+{
+  "id_cliente": 1,
+  "total": 1000
+}
+
