@@ -3,11 +3,13 @@
 ### obtener todos los usuarios
 GET http://localhost:1234/users
 
+
 ### obtener un usuario por el id
 GET http://localhost:1234/users/1
 
+
 ### eliminar un usuario por el id
-DELETE  http://localhost:1234/users/15
+DELETE  http://localhost:1234/users/4
 
 
 ### crear un usuario
@@ -27,7 +29,7 @@ Content-Type: application/json
 
 
 ### actualizar un usuario
-PATCH http://localhost:1234/users/4
+PATCH http://localhost:1234/users/3
 Content-Type: application/json
 
 {
@@ -46,3 +48,72 @@ Content-Type: application/json
   "clave": "5678"
 }
 
+
+
+//// Requests de Servicios
+
+### getall de servicios
+GET http://localhost:1234/services
+
+
+### getone de servicios
+GET http://localhost:1234/services/1
+
+
+### eliminar un servicio por el id
+DELETE  http://localhost:1234/services/2
+
+
+### crear un servicio
+POST http://localhost:1234/services
+Content-Type: application/json
+
+{
+  "desc_servicio": "Arreglo Track Pad",
+  "precio": 90000
+}
+
+
+### actualizar un servicio
+PATCH http://localhost:1234/services/3
+Content-Type: application/json
+
+{
+    "precio": 123456
+}
+
+
+
+//// Requests de Productos
+
+### obtener todos los productos
+GET http://localhost:1234/products
+
+
+### obtener un producto por el id
+GET http://localhost:1234/products/3
+
+
+### eliminar un producto por el id
+DELETE  http://localhost:1234/products/1
+
+
+### crear un producto
+POST http://localhost:1234/products
+Content-Type: application/json
+
+{
+  "nombre_producto": "Motherboard",
+  "desc_producto": "Placa madre re copada",
+  "precio": 2000,
+  "stock": 2
+}
+
+
+### actualizar un producto
+PATCH http://localhost:1234/products/2
+Content-Type: application/json
+
+{
+    "stock": 2222
+}

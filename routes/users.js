@@ -5,7 +5,6 @@ export const createUserRouter = ({ userModel }) => {
   const userRouter = Router()
 
   const userController = new UserController({ userModel })
-
   userRouter.get('/', userController.getAllUsers)
   userRouter.get('/:id', userController.getUserById)
   userRouter.delete('/:id', userController.deleteUserById)
@@ -14,3 +13,4 @@ export const createUserRouter = ({ userModel }) => {
 
   return userRouter
 }
+

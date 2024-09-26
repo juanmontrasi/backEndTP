@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-const userSchema = z.object({
+const userSchema = z.object({ 
   nombre_usuario: z.string({
     invalid_type_error: 'Nombre de Usuario must be a string',
     required_error: 'Nombre de Usuario required'

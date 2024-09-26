@@ -6,32 +6,32 @@ export class UserController {
     this.userModel = userModel
   }
 
-  getAllUsers = async (req, res) => {
-    const users = await this.userModel.findAll()
-    if (users.length > 0) {
-      res.json(users)
+  getAllUsers = async (req, res) => { 
+    const users = await this.userModel.findAll() 
+    if (users.length > 0) { 
+      res.json(users) 
     } else {
-      res.status(404).send({ message: 'no users available' })
+      res.status(404).send({ message: 'no users available' }) 
     }
   }
 
   getUserById = async (req, res) => {
-    const { id } = req.params
-    const user = await this.userModel.findAll({
+    const { id } = req.params // desestructura el id del objeto que contiene los parametros de la request
+    const user = await this.userModel.findAll({ // asi es como sequelizer pide los parametros del where
       where: {
         id_usuarios: id,
       },
     })
-    if (user) return res.json(user)
+    if (user) return res.json(user) 
     res.status(404).json({ message: 'User not found' })
   }
 
   createUser = async (req, res) => {
-    console.log(req.body)
+    console.log(req.body) // el parametro body viene por defecto en req, igual que params
     const result = validateUser(req.body)
 
     if (!result.success) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
+      return res.status(400).json({ error: JSON.parse(result.error.message) }) // JSON es un objeto global que trae metodos como parse (convierte string en json) y stringify (convierte json en string)
     }
     const newUser = await this.userModel.create({
       nombre_usuario: result.data.nombre_usuario,
@@ -43,7 +43,7 @@ export class UserController {
       apellido: result.data.apellido,
       direccion: result.data.direccion,
     })
-    res.status(201).json(newUser)
+    res.status(201).json(newUser) // siempre se devuelve el objeto creado
   }
 
   deleteUserById = async (req, res) => {
