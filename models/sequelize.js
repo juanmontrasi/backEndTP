@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize'
 import 'dotenv/config'
 
-const PASSWORD = process.env.PASSWORD
+const PASSWORD = process.env.PASSWORD  // saca la contraseña de TU bd desde el archivo de entorno
 
-const sequelize = new Sequelize('tp_desarrollo', 'root', PASSWORD, {
+const sequelize = new Sequelize('tp_desarrollo_mod', 'root', PASSWORD, {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306
