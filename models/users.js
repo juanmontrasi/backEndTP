@@ -1,5 +1,8 @@
 import { DataTypes } from 'sequelize'
 import sequelize from './sequelize.js'
+import { servicesClientsModel } from './services-clients.js'
+import { orderModel } from './orders.js'
+
 
 export const userModel = sequelize.define(
   'Usuario',
@@ -48,10 +51,10 @@ export const userModel = sequelize.define(
   }
 )
 
-// userModel.hasMany(servicesClientsModel, { foreignKey: 'id_usuario' });
-// servicesClientsModel.belongsTo(userModel, { foreignKey: 'id_usuario' });
-// userModel.hasMany(OrdersModel, { foreignKey: 'id_cliente' });
-// OrdersModel.belongsTo(userModel, {
-//   foreignKey: 'id_cliente',
-//   onDelete: 'CASCADE',
-// });
+userModel.hasMany(servicesClientsModel, { foreignKey: 'id_usuario' }) // Cambiado 'id_usuarios' a 'id_usuario'
+servicesClientsModel.belongsTo(userModel, { foreignKey: 'id_usuario' })
+userModel.hasMany(orderModel, { foreignKey: 'id_cliente' })
+orderModel.belongsTo(userModel, {
+  foreignKey: 'id_cliente',
+  onDelete: 'CASCADE',
+})
