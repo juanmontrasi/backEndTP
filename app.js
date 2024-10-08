@@ -5,11 +5,10 @@ import { createOrderRouter } from './routes/orders.js'
 import { createServiceRouter } from './routes/services.js'
 import { createProductRouter } from './routes/products.js'
 import { createOrderProductsRouter } from './routes/orders-products.js'
-
-export const createApp = ({ userModel, orderModel, serviceModel, productModel ,orderProductsModel}) => {
 import { createServicesClientsRouter } from './routes/services-clients.js'
 
-export const createApp = ({ userModel, orderModel, serviceModel, productModel, servicesClientsModel }) => {
+
+export const createApp = ({ userModel, orderModel, serviceModel, productModel, servicesClientsModel, orderProductsModel }) => {
   const app = express() // crea la app
   app.use(json()) // pasar por los middlewares
   app.disable('x-powered-by')
