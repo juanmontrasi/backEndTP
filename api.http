@@ -111,7 +111,7 @@ GET http://localhost:1234/products/3
 DELETE  http://localhost:1234/products/1
 
 
-### crear un producto
+### crear un producto       !!!!!! agregar autorizacion dentro del controlador
 POST http://localhost:1234/products
 Content-Type: application/json
 
@@ -123,10 +123,23 @@ Content-Type: application/json
 }
 
 
-### actualizar un producto
-PATCH http://localhost:1234/products/2
+### actualizar un producto    !!!!!! agregar autorizacion
+PATCH http://localhost:1234/products/2    
 Content-Type: application/json
 
 {
     "stock": 2222
+}
+
+
+//// Requests de Pedidos-Productos
+
+### crear un pedido-producto
+POST http://localhost:1234/orders/products
+Content-Type: application/json
+
+{
+  "id_producto": 4,
+  "id_pedidos": 2,
+  "cantidad": 5
 }

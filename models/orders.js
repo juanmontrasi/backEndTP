@@ -10,14 +10,18 @@ export const orderModel = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    
     fecha_pedido: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: sequelize.NOW,
     },
+
     total: {
       type: DataTypes.DECIMAL(9, 3),
+      // poner que es derivada?
     },
+
     id_cliente: {
       type: DataTypes.INTEGER,
       allowNull: false,

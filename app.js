@@ -4,8 +4,9 @@ import { createLoginRouter } from './routes/login.js'
 import { createOrderRouter } from './routes/orders.js'
 import { createServiceRouter } from './routes/services.js'
 import { createProductRouter } from './routes/products.js'
+import { createOrderProductsRouter } from './routes/orders-products.js'
 
-export const createApp = ({ userModel, orderModel, serviceModel, productModel }) => {
+export const createApp = ({ userModel, orderModel, serviceModel, productModel ,orderProductsModel}) => {
   const app = express() // crea la app
   app.use(json()) // pasar por los middlewares
   app.disable('x-powered-by')
@@ -16,7 +17,7 @@ export const createApp = ({ userModel, orderModel, serviceModel, productModel })
 
   app.use('/services', createServiceRouter({ serviceModel }))
   app.use('/products', createProductRouter({ productModel }))
-
+  app.use('/orders/products', createOrderProductsRouter ({orderProductsModel}))
 
 
   const PORT = process.env.PORT ?? 1234
