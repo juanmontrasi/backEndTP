@@ -10,4 +10,4 @@ export const createOrderRouter = ({ orderModel }) => {
   ordersRouter.get('/', ordersController.getAll)
 
   return ordersRouter
-};
+}

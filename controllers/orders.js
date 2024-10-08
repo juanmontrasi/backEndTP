@@ -1,6 +1,6 @@
-// import { OrderProduct } from '../models/order-products.js'
+// import { orderProduct } from '../models/orders-products.js'
 import { date } from 'zod'
-import { userModel } from '../models/users.js'
+// import { userModel } from '../models/users.js'
 
 export class OrdersController {
   constructor({ orderModel }) {
@@ -9,7 +9,7 @@ export class OrdersController {
 
   createOrder = async (req, res) => {
     const { id_cliente, total } = req.body
-    const fechaHoy = new Date()
+    const fechaHoy = new date()
     try {
       const newOrder = await this.orderModel.create({
         fecha_pedido: fechaHoy,
@@ -31,11 +31,12 @@ export class OrdersController {
       const orders = await this.orderModel.findAll({
         // include: [
         //   {
-        //     model: OrderProduct,
+        //     model: orderPorduct,
         //     attributes: ['id_producto', 'cantidad'],
         //   },
         //   { model: userModel },
-        // ], esta va cuando tenga lo de productos
+        // ],
+        // cuando terminemos el de order-products lo descomentamos
       })
 
       if (orders.length > 0) {

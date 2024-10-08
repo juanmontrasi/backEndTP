@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
 import sequelize from './sequelize.js'
+import { servicesClientsModel } from './services-clients.js';
 
 /*
 idServicio
@@ -12,19 +13,19 @@ export const serviceModel = sequelize.define(
   'Servicio',
   {
     id_servicios: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
 
     desc_servicio: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
 
     precio: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
+      type: DataTypes.FLOAT,
+      allowNull: false,
     },
 
     /*
@@ -37,3 +38,6 @@ export const serviceModel = sequelize.define(
     tableName: 'servicios',
     timestamps: false,
   })
+
+serviceModel.hasMany(servicesClientsModel, { foreignKey: "id_servicio", onDelete: "CASCADE" });
+servicesClientsModel.belongsTo(serviceModel, { foreignKey: "id_servicio", onDelete: "CASCADE" });
