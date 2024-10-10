@@ -3,6 +3,7 @@ import { orderModel } from './models/orders.js'
 import { userModel } from './models/users.js'
 import { serviceModel } from './models/services.js'
 import { productModel } from './models/products.js'
+import { orderProductsModel } from './models/orders-products.js'
 import { servicesClientsModel } from './models/services-clients.js'
 
 
@@ -11,5 +12,6 @@ createApp({ // punto de entrada de la aplicacion
   orderModel: orderModel,
   serviceModel: serviceModel,
   productModel: productModel,
+  orderProductsModel: orderProductsModel,
   servicesClientsModel: servicesClientsModel,
 })
