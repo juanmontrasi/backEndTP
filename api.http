@@ -131,6 +131,16 @@ Content-Type: application/json
     "stock": 2222
 }
 
+//// Requests de login
+
+### login
+POST http://localhost:1234/login
+Content-Type: application/json
+
+{
+  "nombre_usuario": "carlosg",
+  "clave": "2532243"
+}
 
 //// Requests de Servicios-Clientes
 
@@ -138,7 +148,7 @@ Content-Type: application/json
 ### Buscar todos los servicios de los clientes
 
 GET http://localhost:1234/services-clients
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Imp1YW4yMyIsInBhc3N3b3JkIjoiMTIzNCIsImlhdCI6MTY5ODk2MTMzMCwiZXhwIjoxNjk4OTYxOTMwfQ.TpAGVx9WmzvO67b5fPlyTlO5A5WAV2UYwpzG2taEJJ0
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNhcmxvc2ciLCJwYXNzd29yZCI6IjI1MzIyNDMiLCJpYXQiOjE3MjgwNDk0MjUsImV4cCI6MTcyODA1MDAyNX0.cdMq7zJjdLu43V0_lazM4G_CEOFcREOZKgvim2zYTz4
 
 
 ### Buscar un servicio de un cliente por id
@@ -169,6 +179,7 @@ DELETE http://localhost:1234/services-clients/1/2/2024-10-08T16:32:00.000Z
 ### Actualizar un servicio
 
 PATCH http://localhost:1234/services-clients/1/2/2024-10-08T15:32:00.000Z
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNhcmxvc2ciLCJwYXNzd29yZCI6IjI1MzIyNDMiLCJpYXQiOjE3MjgwNDk0MjUsImV4cCI6MTcyODA1MDAyNX0.cdMq7zJjdLu43V0_lazM4G_CEOFcREOZKgvim2zYTz4
 Content-Type: application/json
 
 {
