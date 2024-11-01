@@ -1,4 +1,5 @@
 import express, { json } from 'express'
+import cors from 'cors'
 import { createUserRouter } from './routes/users.js'
 import { createLoginRouter } from './routes/login.js'
 import { createOrderRouter } from './routes/orders.js'
@@ -10,6 +11,7 @@ import { createServicesClientsRouter } from './routes/services-clients.js'
 
 export const createApp = ({ userModel, orderModel, serviceModel, productModel, servicesClientsModel, orderProductsModel }) => {
   const app = express() // crea la app
+  app.use(cors())
   app.use(json()) // pasar por los middlewares
   app.disable('x-powered-by')
 
@@ -18,7 +20,7 @@ export const createApp = ({ userModel, orderModel, serviceModel, productModel, s
   app.use('/orders', createOrderRouter({ orderModel }))
   app.use('/services', createServiceRouter({ serviceModel }))
   app.use('/products', createProductRouter({ productModel }))
-  app.use('/orders/products', createOrderProductsRouter ({orderProductsModel}))
+  app.use('/orders/products', createOrderProductsRouter({ orderProductsModel }))
   app.use('/services-clients', createServicesClientsRouter({ servicesClientsModel }))
 
 

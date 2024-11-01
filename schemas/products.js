@@ -1,13 +1,13 @@
 import { z } from "zod"
 
 const productSchema = z.object({    // define como una plantilla que tiene que seguir los body de los posts/patch que lleguen
-  
-    nombre_producto: z.string({
+
+  nombre_producto: z.string({
     invalid_type_error: 'Nombre de Producto debe ser texto',
     required_error: 'Nombre de Producto requerido'
   }),
 
-    desc_producto: z.string({
+  desc_producto: z.string({
     invalid_type_error: 'Descripción de Producto debe ser texto',
     required_error: 'Descripción de Producto requerido'
   }),
@@ -22,7 +22,11 @@ const productSchema = z.object({    // define como una plantilla que tiene que s
     required_error: 'Stock de Producto requerido'
   }),
 
-  
+  imagen: z.string({
+    invalid_type_error: 'Imagen de Producto debe ser texto',
+  }),
+
+
 
 })
 

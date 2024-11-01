@@ -5,7 +5,7 @@ GET http://localhost:1234/users
 
 
 ### obtener un usuario por el id
-GET http://localhost:1234/users/1
+GET http://localhost:1234/users/30
 
 
 ### eliminar un usuario por el id
@@ -29,11 +29,20 @@ Content-Type: application/json
 
 
 ### actualizar un usuario
-PATCH http://localhost:1234/users/3
+PATCH http://localhost:1234/users/30
 Content-Type: application/json
 
 {
-    "clave": "123456"
+  
+    "id_usuarios": 30,
+    "nombre_usuario": "carlosg",
+    "clave": "1234567",
+    "tipo_usuario": 2,
+    "email": "carlosg@gmail",
+    "telefono": "345823912",
+    "nombre": "Carlos",
+    "apellido": "Garcia",
+    "direccion": "Brassey 363"
 }
 
 
@@ -44,8 +53,8 @@ POST http://localhost:1234/login
 Content-Type: application/json
 
 {
-  "nombre_usuario": "alejom",
-  "clave": "5678"
+  "nombre_usuario": "juanm",
+  "clave": "123"
 }
 
 //// Requests de Pedidos
@@ -104,11 +113,11 @@ GET http://localhost:1234/products
 
 
 ### obtener un producto por el id
-GET http://localhost:1234/products/3
+GET http://localhost:1234/products/13
 
 
 ### eliminar un producto por el id
-DELETE  http://localhost:1234/products/1
+DELETE  http://localhost:1234/products/13
 
 
 ### crear un producto       !!!!!! agregar autorizacion dentro del controlador
@@ -119,7 +128,8 @@ Content-Type: application/json
   "nombre_producto": "Motherboard",
   "desc_producto": "Placa madre re copada",
   "precio": 2000,
-  "stock": 2
+  "stock": 2,
+  "imagen": "assets/motherboard.jpg"
 }
 
 
@@ -159,7 +169,7 @@ Content-Type: application/json
 ### Buscar todos los servicios de los clientes
 
 GET http://localhost:1234/services-clients
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNhcmxvc2ciLCJwYXNzd29yZCI6IjI1MzIyNDMiLCJpYXQiOjE3MjgwNDk0MjUsImV4cCI6MTcyODA1MDAyNX0.cdMq7zJjdLu43V0_lazM4G_CEOFcREOZKgvim2zYTz4
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNhcmxvc2ciLCJwYXNzd29yZCI6IjI1MzIyNDMiLCJpYXQiOjE3Mjg2Nzg4NTAsImV4cCI6MTcyODY3OTQ1MH0.mzqPJ8hC67Dp2OhGqIrY7LoTUM08i9VUfwkz4iW8Sdw
 
 
 ### Buscar un servicio de un cliente por id
