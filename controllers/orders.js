@@ -9,7 +9,7 @@ export class OrdersController {
 
   createOrder = async (req, res) => {
     const { id_cliente, total } = req.body
-    const fechaHoy = new date()
+    const fechaHoy = new Date()
     try {
       const newOrder = await this.orderModel.create({
         fecha_pedido: fechaHoy,

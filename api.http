@@ -66,7 +66,7 @@ POST http://localhost:1234/orders
 Content-Type: application/json
 
 {
-  "id_cliente": 1,
+  "id_cliente": 30,
   "total": 1000
 }
 
@@ -107,6 +107,9 @@ Content-Type: application/json
 
 
 //// Requests de Productos
+
+### obtener productos por nombre
+GET http://localhost:1234/products/search?nombre_producto=aur
 
 ### obtener todos los productos
 GET http://localhost:1234/products

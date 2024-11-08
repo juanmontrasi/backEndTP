@@ -1,3 +1,4 @@
+import { Op } from "sequelize"
 import { validatePartialProduct, validateProduct } from "../schemas/products.js"
 
 export class ProductController {
@@ -86,4 +87,20 @@ export class ProductController {
 
   }
 
+  getProductByName = async (req, res) => {
+    const { nombre_producto } = req.query
+    try {
+      const productos = await this.productModel.findAll({
+        where: {
+          nombre_producto: {
+            [Op.like]: `%${nombre_producto}%`
+          },
+        },
+      })
+      res.json(productos)
+    } catch (error) {
+      res.status(500).send('Error al buscar el producto')
+    }
+
+  }
 }
