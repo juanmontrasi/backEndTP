@@ -3,13 +3,11 @@ import { corsMiddleware } from './middlewares/cors.js'
 import { createUserRouter } from './routes/users.js'
 import { createLoginRouter } from './routes/login.js'
 import { createOrderRouter } from './routes/orders.js'
-import { createServiceRouter } from './routes/services.js'
 import { createProductRouter } from './routes/products.js'
 import { createOrderProductsRouter } from './routes/orders-products.js'
-import { createServicesClientsRouter } from './routes/services-clients.js'
 
 
-export const createApp = ({ userModel, orderModel, serviceModel, productModel, servicesClientsModel, orderProductsModel }) => {
+export const createApp = ({ userModel, orderModel, productModel, orderProductsModel }) => {
   const app = express() // crea la app
   app.use(corsMiddleware())
   app.use(json()) // pasar por los middlewares
@@ -18,10 +16,8 @@ export const createApp = ({ userModel, orderModel, serviceModel, productModel, s
   app.use('/users', createUserRouter({ userModel }))
   app.use('/login', createLoginRouter({ userModel }))
   app.use('/orders', createOrderRouter({ orderModel }))
-  app.use('/services', createServiceRouter({ serviceModel }))
   app.use('/products', createProductRouter({ productModel }))
   app.use('/orders/products', createOrderProductsRouter({ orderProductsModel }))
-  app.use('/services-clients', createServicesClientsRouter({ servicesClientsModel }))
 
 
   const PORT = process.env.PORT ?? 1234
