@@ -39,7 +39,6 @@ CREATE TABLE `pedidos` (
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
-INSERT INTO `pedidos` VALUES (60,'2024-11-20 13:28:23',4199,33),(61,'2024-11-20 13:55:43',4347,33),(62,'2024-11-20 14:00:18',5396,30),(63,'2024-11-20 14:03:20',4099,33),(64,'2024-11-20 14:19:46',1600,33),(65,'2024-11-20 14:21:04',6000,33),(66,'2024-11-20 14:24:30',3000,33),(67,'2024-11-20 14:25:55',1500,33),(68,'2024-11-20 14:26:13',800,33),(69,'2024-11-20 14:31:37',800,33),(70,'2024-11-20 14:33:15',800,33),(71,'2024-11-20 14:34:12',800,33),(72,'2024-11-20 14:36:21',7200,33),(73,'2024-11-20 14:37:47',8800,33),(75,'2024-11-20 15:55:35',2400,33),(76,'2024-11-20 16:21:11',800,33),(77,'2024-11-20 18:05:15',899,33);
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +97,6 @@ CREATE TABLE `productos_pedidos` (
 
 LOCK TABLES `productos_pedidos` WRITE;
 /*!40000 ALTER TABLE `productos_pedidos` DISABLE KEYS */;
-INSERT INTO `productos_pedidos` VALUES (60,1,3,2400),(60,2,1,1500),(60,3,1,299),(61,1,1,800),(61,2,1,1500),(61,3,1,299),(61,4,1,899),(61,6,1,349),(61,7,1,500),(62,2,2,3000),(62,3,2,598),(62,4,2,1798),(63,1,1,800),(63,2,2,3000),(63,3,1,299),(64,1,2,1600),(65,2,4,6000),(66,2,2,3000),(67,2,1,1500),(68,1,1,800),(69,1,1,800),(70,1,1,800),(71,1,1,800),(72,1,9,7200),(73,1,11,8800),(75,1,3,2400),(76,1,1,800),(77,4,1,899);
 /*!40000 ALTER TABLE `productos_pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +121,7 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `id_usuarios_UNIQUE` (`id_usuarios`),
   UNIQUE KEY `nombre_usuario_UNIQUE` (`nombre_usuario`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +130,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (30,'carlosg','1234567',2,'carlosgomez@gmail.com','345823913','Carlos','Garcia','Brassey 363'),(33,'juanm','1234',1,'juanm@gmai.com','123','Juan','Montrasi','Venezuela 681 bis');
+INSERT INTO `usuarios` VALUES (67,'admin','admin',1,'admin@admin.com','1111111111','admin','admin','admin');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -145,4 +143,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-20 15:07:21
+-- Dump completed on 2024-11-20 15:18:48
