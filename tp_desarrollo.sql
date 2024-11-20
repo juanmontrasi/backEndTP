@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: tp_desarrollo
+-- Host: localhost    Database: tp_desarrollo_mod
 -- ------------------------------------------------------
 -- Server version	8.4.0
 
@@ -16,8 +16,8 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-CREATE database tp_desarrollo; 
-use tp_desarrollo;
+CREATE database tp_desarrollo_mod; 
+use tp_desarrollo_mod;
 
 --
 -- Table structure for table `pedidos`
