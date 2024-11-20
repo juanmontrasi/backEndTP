@@ -1,5 +1,7 @@
+
 import { DataTypes } from 'sequelize'
 import sequelize from './sequelize.js'
+
 
 export const orderModel = sequelize.define(
   'pedidos',
@@ -10,7 +12,7 @@ export const orderModel = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    
+
     fecha_pedido: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -19,7 +21,7 @@ export const orderModel = sequelize.define(
 
     total: {
       type: DataTypes.DECIMAL(9, 3),
-      // poner que es derivada?
+      allowNull: false,
     },
 
     id_cliente: {

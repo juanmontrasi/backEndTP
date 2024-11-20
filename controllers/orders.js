@@ -1,6 +1,7 @@
-// import { orderProduct } from '../models/orders-products.js'
+import { orderProductsModel } from '../models/orders-products.js'
+import { productModel } from '../models/products.js'
 import { date } from 'zod'
-// import { userModel } from '../models/users.js'
+import { userModel } from '../models/users.js'
 
 export class OrdersController {
   constructor({ orderModel }) {
@@ -29,14 +30,23 @@ export class OrdersController {
   getAll = async (req, res) => {
     try {
       const orders = await this.orderModel.findAll({
-        // include: [
-        //   {
-        //     model: orderPorduct,
-        //     attributes: ['id_producto', 'cantidad'],
-        //   },
-        //   { model: userModel },
-        // ],
-        // cuando terminemos el de order-products lo descomentamos
+        include: [
+          {
+            model: orderProductsModel,
+            attributes: ['id_producto', 'cantidad', 'subtotal'],
+            include: [
+              {
+                model: productModel,
+                attributes: ['nombre_producto', 'precio'],
+              },
+            ],
+          },
+          {
+            model: userModel, // Suponiendo que tienes este modelo
+            attributes: ['nombre', 'email'], // Especifica las columnas necesarias
+          },
+        ],
+
       })
 
       if (orders.length > 0) {
