@@ -1,6 +1,6 @@
-import { Op, Model, DataTypes, NOW } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import { productModel } from './products.js';
 import { orderModel } from './orders.js';
-
 import sequelize from './sequelize.js';
 
 export const orderProductsModel = sequelize.define(
@@ -20,6 +20,10 @@ export const orderProductsModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    subtotal: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    }
 
   },
   {
@@ -27,7 +31,8 @@ export const orderProductsModel = sequelize.define(
   }
 );
 
-orderModel.hasMany(orderProductsModel, {
-  foreignKey: 'id_pedidos',
-});
+orderModel.hasMany(orderProductsModel, { foreignKey: 'id_pedidos' });
+orderProductsModel.belongsTo(orderModel, { foreignKey: 'id_pedidos' });
 
+orderProductsModel.belongsTo(productModel, { foreignKey: 'id_producto' });
+productModel.hasMany(orderProductsModel, { foreignKey: 'id_producto' });

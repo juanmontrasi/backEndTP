@@ -162,9 +162,10 @@ POST http://localhost:1234/orders/products
 Content-Type: application/json
 
 {
-  "id_producto": 4,
-  "id_pedidos": 2,
-  "cantidad": 5
+  "id_producto": 12,
+  "id_pedidos": 25,
+  "cantidad": 5,
+  "subtotal": 1000
 }
 //// Requests de Servicios-Clientes
 

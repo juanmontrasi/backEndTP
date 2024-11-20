@@ -38,3 +38,4 @@ export const productModel = sequelize.define(
     tableName: 'productos',
     timestamps: false,
   })
+
