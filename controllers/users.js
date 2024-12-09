@@ -33,17 +33,22 @@ export class UserController {
       if (!result.success) {
         return res.status(400).json({ error: JSON.parse(result.error.message) }) // JSON es un objeto global que trae metodos como parse (convierte string en json) y stringify (convierte json en string)
       }
-      const newUser = await this.userModel.create({
-        nombre_usuario: result.data.nombre_usuario,
-        clave: result.data.clave,
-        tipo_usuario: result.data.tipo_usuario,
-        email: result.data.email,
-        telefono: result.data.telefono,
-        nombre: result.data.nombre,
-        apellido: result.data.apellido,
-        direccion: result.data.direccion,
-      })
-      res.status(201).json(newUser)
+      if(result.data.tipo_usuario === 1 || result.data.tipo_usuario === 2){
+        const newUser = await this.userModel.create({
+          nombre_usuario: result.data.nombre_usuario,
+          clave: result.data.clave,
+          tipo_usuario: result.data.tipo_usuario,
+          email: result.data.email,
+          telefono: result.data.telefono,
+          nombre: result.data.nombre,
+          apellido: result.data.apellido,
+          direccion: result.data.direccion,
+        })
+        res.status(201).json(newUser)
+      }else {
+        res.status(400).send({ message: 'error creating user' })
+      }
+      
     } catch {
       res.status(400).send({ message: 'error creating user' })
     }
@@ -77,29 +82,33 @@ export class UserController {
     }
 
     const { id } = req.params
-
-    const [updatedUser] = await this.userModel.update(
-      {
-        nombre_usuario: result.data.nombre_usuario,
-        clave: result.data.clave,
-        tipo_usuario: result.data.tipo_usuario,
-        email: result.data.email,
-        telefono: result.data.telefono,
-        nombre: result.data.nombre,
-        apellido: result.data.apellido,
-        direccion: result.data.direccion,
-      },
-      {
-        where: {
-          id_usuarios: id,
+    if(result.data.tipo_usuario === 1 || result.data.tipo_usuario === 2){
+      const [updatedUser] = await this.userModel.update(
+        {
+          nombre_usuario: result.data.nombre_usuario,
+          clave: result.data.clave,
+          tipo_usuario: result.data.tipo_usuario,
+          email: result.data.email,
+          telefono: result.data.telefono,
+          nombre: result.data.nombre,
+          apellido: result.data.apellido,
+          direccion: result.data.direccion,
         },
+        {
+          where: {
+            id_usuarios: id,
+          },
+        }
+      )
+      if (updatedUser === 0) {
+        return res.status(404).json({ message: 'user not found' });
       }
-    )
-    if (updatedUser === 0) {
-      return res.status(404).json({ message: 'user not found' });
+      res.json({ message: 'user updated succesfully' })
     }
-    res.json({ message: 'user updated succesfully' }) // puedo devolver el user
-
+    else {
+      res.status(400).send({ message: 'error modifying user' })
+    }
+    
   }
 
   loginUser = async (req, res) => {

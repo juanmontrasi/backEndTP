@@ -34,14 +34,19 @@ export class ProductController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-    const newProduct = await this.productModel.create({
-      nombre_producto: result.data.nombre_producto,  //agregada
-      desc_producto: result.data.desc_producto,
-      precio: result.data.precio,
-      stock: result.data.stock,
-      imagen: result.data.imagen
-    })
-    res.status(201).json(newProduct)
+    try{
+      const newProduct = await this.productModel.create({
+        nombre_producto: result.data.nombre_producto,  //agregada
+        desc_producto: result.data.desc_producto,
+        precio: result.data.precio,
+        stock: result.data.stock,
+        imagen: result.data.imagen
+      })
+      res.status(201).json(newProduct)
+    }catch{
+      res.status(400).send({ error: JSON.parse(result.error.message) })
+    }
+    
   }
 
   deleteProductById = async (req, res) => {
@@ -64,26 +69,31 @@ export class ProductController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-    const { id } = req.params
 
-    const [updatedProduct] = await this.productModel.update(
-      {
-        nombre_producto: result.data.nombre_producto,
-        desc_producto: result.data.desc_producto,
-        precio: result.data.precio,
-        stock: result.data.stock,
-        imagen: result.data.imagen
-      },
-      {
-        where: {
-          id_productos: id,
+    const { id } = req.params
+    if(req.body.stock <= 0){
+      return res.status(400).json({ error: 'El stock no puede ser menor o igual a 0' })
+    }else{ 
+      const [updatedProduct] = await this.productModel.update(
+        {
+          nombre_producto: result.data.nombre_producto,
+          desc_producto: result.data.desc_producto,
+          precio: result.data.precio,
+          stock: result.data.stock,
+          imagen: result.data.imagen
         },
+        {
+          where: {
+            id_productos: id,
+          },
+        }
+      )
+      if (updatedProduct === 0) {
+        return res.status(404).json({ message: 'Producto no encontrado' });
       }
-    )
-    if (updatedProduct === 0) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
+      res.json({ message: 'Producto actualizado exitosamente' })
     }
-    res.json({ message: 'Producto actualizado exitosamente' })
+    
 
   }
 

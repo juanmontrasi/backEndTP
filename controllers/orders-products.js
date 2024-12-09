@@ -19,6 +19,10 @@ export class OrderProductsController {
         subtotal,
       });
       if (newOrderProductTuple) {
+        if(product[0].stock < cantidad){
+          res.status(400).json({ message: 'No hay stock suficiente' });
+          return;
+        }
         res.status(201).json(newOrderProductTuple);
       } else {
         res.status(400).json({ message: 'No se pudo crear la tupla' });

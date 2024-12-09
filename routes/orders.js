@@ -8,7 +8,7 @@ export const createOrderRouter = ({ orderModel }) => {
   const ordersController = new OrdersController({ orderModel })
 
   ordersRouter.post('/', validateToken, ordersController.createOrder)
-  ordersRouter.get('/', ordersController.getAll)
+  ordersRouter.get('/', validateToken, ordersController.getAll)
 
   return ordersRouter
 }
