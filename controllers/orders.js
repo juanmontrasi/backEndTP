@@ -58,4 +58,21 @@ export class OrdersController {
       res.status(400).json({ error: 'error buscando el pedido' })
     }
   };
+
+  deleteOrder = async (req, res) => {
+    const {id} = req.params
+
+    try{
+      const order = await this.orderModel.destroy({
+        where: {
+          id_pedidos: id,
+        },  
+      })
+      if(order){
+        res.json({ message: 'Pedido eliminado exitosamente' })
+      }
+    }catch (error) {
+      res.status(400).json({ error: 'error eliminando el pedido' })
+    }
+  }
 }

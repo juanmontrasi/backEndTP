@@ -16,8 +16,8 @@ export class UserController {
   }
 
   getUserById = async (req, res) => {
-    const { id } = req.params // desestructura el id del objeto que contiene los parametros de la request
-    const user = await this.userModel.findAll({ // asi es como sequelizer pide los parametros del where
+    const { id } = req.params 
+    const user = await this.userModel.findAll({
       where: {
         id_usuarios: id,
       },
@@ -27,11 +27,17 @@ export class UserController {
   }
 
   createUser = async (req, res) => {
-    console.log(req.body) // el parametro body viene por defecto en req, igual que params
+    console.log(req.body)
+    if(req.body.tipo_usuario === undefined){
+      req.body.tipo_usuario = 2
+    }
     const result = validateUser(req.body)
     try {
       if (!result.success) {
-        return res.status(400).json({ error: JSON.parse(result.error.message) }) // JSON es un objeto global que trae metodos como parse (convierte string en json) y stringify (convierte json en string)
+        return res.status(400).json({ error: JSON.parse(result.error.message) }) 
+      }
+      if(result.data.tipo_usuario === undefined){
+        result.data.tipo_usuario = 2
       }
       if(result.data.tipo_usuario === 1 || result.data.tipo_usuario === 2){
         const newUser = await this.userModel.create({
