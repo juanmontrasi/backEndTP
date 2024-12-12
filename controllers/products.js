@@ -28,7 +28,6 @@ export class ProductController {
   }
 
   createProduct = async (req, res) => {
-    console.log(req.body)
     const result = validateProduct(req.body)
 
     if (!result.success) {
@@ -50,17 +49,22 @@ export class ProductController {
   }
 
   deleteProductById = async (req, res) => {
-    const { id } = req.params
-    const product = await this.productModel.destroy({
-      where: {
-        id_productos: id,
-      },
-    })
-    if (product) {
-      res.json({ message: 'Producto eliminado exitosamente' })
-    } else {
-      res.status(404).send({ message: 'Producto no encontrado' })
+    try{
+      const { id } = req.params
+      const product = await this.productModel.destroy({
+        where: {
+          id_productos: id,
+        },
+      })
+      if (product) {
+        res.json({ message: 'Producto eliminado exitosamente' })
+      } else {
+        res.status(404).send({ message: 'Producto no encontrado' })
+      }
+    }catch {
+      res.status(400).send({ error: 'No se puede eliminar un producto que tiene ordenes asociadas' })
     }
+    
   }
 
   modifyProduct = async (req, res) => {
@@ -69,6 +73,8 @@ export class ProductController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
+
+    console.log(req.params)
 
     const { id } = req.params
     if(req.body.stock <= 0){

@@ -11,7 +11,7 @@ export class UserController {
     if (users.length > 0) {
       res.json(users)
     } else {
-      res.status(404).send({ message: 'no users available' })
+      res.status(404).send({ message: 'No hay usuarios disponibles' })
     }
   }
 
@@ -23,11 +23,10 @@ export class UserController {
       },
     })
     if (user) return res.json(user)
-    res.status(404).json({ message: 'User not found' })
+    res.status(404).json({ message: 'Usuario no encontrado' })
   }
 
   createUser = async (req, res) => {
-    console.log(req.body)
     if(req.body.tipo_usuario === undefined){
       req.body.tipo_usuario = 2
     }
@@ -35,9 +34,6 @@ export class UserController {
     try {
       if (!result.success) {
         return res.status(400).json({ error: JSON.parse(result.error.message) }) 
-      }
-      if(result.data.tipo_usuario === undefined){
-        result.data.tipo_usuario = 2
       }
       if(result.data.tipo_usuario === 1 || result.data.tipo_usuario === 2){
         const newUser = await this.userModel.create({
@@ -52,11 +48,11 @@ export class UserController {
         })
         res.status(201).json(newUser)
       }else {
-        res.status(400).send({ message: 'error creating user' })
+        res.status(400).send({ message: 'Error creando el usuario' })
       }
       
     } catch {
-      res.status(400).send({ message: 'error creating user' })
+      res.status(400).send({ message: 'Error creando el usuario' })
     }
 
   }
@@ -64,18 +60,27 @@ export class UserController {
   deleteUserById = async (req, res) => {
     const { id } = req.params
     try {
+      const orders = await orderModel.findAll({
+        where: {
+          id_usuario: id_usuario,
+        }
+      });
+  
+      if (orders.length > 0) {
+        return res.status(400).json({ message: 'No se puede eliminar el usuario, tiene pedidos asociados' });
+      }
       const user = await this.userModel.destroy({
         where: {
           id_usuarios: id,
         },
       })
       if (user) {
-        res.json({ message: 'user deleted succesfully' })
+        res.json({ message: 'Usuario eliminado correctamente' })
       } else {
-        res.status(404).send({ message: 'user not found' })
+        res.status(404).send({ message: 'Usuario no encontrado' })
       }
     } catch {
-      res.status(400).send({ message: 'error deleting user' })
+      res.status(400).send({ message: 'Error al eliminar el usuario' })
     }
 
   }
@@ -86,7 +91,6 @@ export class UserController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-
     const { id } = req.params
     if(result.data.tipo_usuario === 1 || result.data.tipo_usuario === 2){
       const [updatedUser] = await this.userModel.update(
@@ -107,12 +111,12 @@ export class UserController {
         }
       )
       if (updatedUser === 0) {
-        return res.status(404).json({ message: 'user not found' });
+        return res.status(404).json({ message: 'Usuario no encontrado' });
       }
-      res.json({ message: 'user updated succesfully' })
+      res.json({ message: 'Usuario modificado correctamente' })
     }
     else {
-      res.status(400).send({ message: 'error modifying user' })
+      res.status(400).send({ message: 'Error modificando el usuario' })
     }
     
   }
@@ -136,10 +140,10 @@ export class UserController {
         const token = generateToken(payload);
         res.json({ token, user });
       } else {
-        res.status(404).send({ message: 'user not found' });
+        res.status(404).send({ message: 'Usuario no encontrado' });
       }
     } catch {
-      res.status(404).send({ message: 'error' });
+      res.status(404).send({ message: 'Error en el LogIn' });
     }
 
   }
