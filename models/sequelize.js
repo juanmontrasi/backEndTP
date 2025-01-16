@@ -1,7 +1,8 @@
 import { Sequelize } from 'sequelize'
-import 'dotenv/config'
+import dotenv from 'dotenv';
+dotenv.config();
 
-const PASSWORD = process.env.PASSWORD
+const PASSWORD = process.env.BDPASSWORD
 const sequelize = new Sequelize('tp_desarrollo_mod', 'root', PASSWORD, {
   host: 'localhost',
   dialect: 'mysql',

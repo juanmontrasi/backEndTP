@@ -4,15 +4,21 @@ import { date } from 'zod'
 import { userModel } from '../models/users.js'
 import { validatePartialOrder } from '../schemas/orders.js'
 
+
 export class OrdersController {
   constructor({ orderModel }) {
     this.orderModel = orderModel
   }
 
+  
+
   createOrder = async (req, res) => {
     const { id_cliente, total } = req.body
     const fechaHoy = new Date()
     const estado = 'En proceso'
+    if(total === 0){
+      return res.status(400).json({ error: 'El total no puede ser 0' })
+    }
     try {
       const newOrder = await this.orderModel.create({
         fecha_pedido: fechaHoy,
@@ -29,6 +35,38 @@ export class OrdersController {
       res.status(400).json({ error: 'Error creando el pedido' })
     }
   }
+
+  getOrderById = async (id_pedidos) => {
+    try {
+      const orders = await this.orderModel.findAll({
+        where: {
+            id_pedidos: id_pedidos,
+        },
+        include: [
+          
+            {
+                model: orderProductsModel,
+                attributes: ['id_producto', 'cantidad', 'subtotal'],
+                include: [
+                    {
+                        model: productModel,
+                        attributes: ['nombre_producto', 'precio'],
+                    },
+                ],
+            },
+            {
+                model: userModel,
+                attributes: ['nombre', 'apellido', 'email'],
+            },
+        ],
+    })
+    return orders
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
   getAll = async (req, res) => {
     try {
       const orders = await this.orderModel.findAll({
@@ -88,7 +126,6 @@ export class OrdersController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-
     const { id } = req.params
     const estado = result.data.estado === 'En proceso' ? 'Entregado' : 'En proceso' 
     try {
@@ -110,6 +147,7 @@ export class OrdersController {
         res.json({ message: 'Pedido modificado exitosamente' })
       }
     } catch (error) {
+      console.log(error)
       res.status(400).json({ error: 'error modificando el pedido' })
     }
   }
