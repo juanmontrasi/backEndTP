@@ -16,11 +16,11 @@ export const validateToken = (req, res, next) => {
   const authHeader = req.headers['authorization']
   if (!authHeader) {
     return res.status(401).json({ message: 'Token no proporcionado' });
-  } 
+  }
   const token = authHeader.split(' ')[1]
   jwt.verify(token, secret, (err, user) => {
     if (err) {
-      return res.status(401).json({ message: 'Token no válido' })
+      return res.status(401).json({ message: 'Su sesión expiro, ingrese nuevamente' })
     }
     if (user.tipo_usuario !== ROLES.ADMIN) {
       return res.status(403).json({ message: 'No tienes permisos para esta acción' })

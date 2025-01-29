@@ -1,6 +1,6 @@
 import { orderProductsModel } from '../models/orders-products.js'
 import { productModel } from '../models/products.js'
-import { date } from 'zod'
+import { date, datetimeRegex } from 'zod'
 import { userModel } from '../models/users.js'
 import { validatePartialOrder } from '../schemas/orders.js'
 
@@ -128,11 +128,12 @@ export class OrdersController {
     }
     const { id } = req.params
     const estado = result.data.estado === 'En proceso' ? 'Entregado' : 'En proceso' 
+    const fechaPedido = new Date(this.convertToUTC(result.data.fecha_pedido));
     try {
 
       const [updatedOrder] = await this.orderModel.update(
         {
-          fecha_pedido: result.data.fecha_pedido,
+          fecha_pedido: fechaPedido,
           total: result.data.total,
           id_cliente: result.data.id_cliente,
           estado: estado,
@@ -150,5 +151,14 @@ export class OrdersController {
       console.log(error)
       res.status(400).json({ error: 'error modificando el pedido' })
     }
+  }
+
+  convertToUTC = (date) => {
+    const fechaPedidoParts = date.split(', ')
+    const [day, month, year] = fechaPedidoParts[0].split('/')
+    const time = fechaPedidoParts[1]
+    const formattedFechaPedido = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}`
+
+    return formattedFechaPedido
   }
 }
