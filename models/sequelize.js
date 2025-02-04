@@ -8,7 +8,8 @@ if (!process.env.BDPASSWORD) {
 }
 
 const PASSWORD = process.env.BDPASSWORD
-const sequelize = new Sequelize('tp_desarrollo_mod', 'root', PASSWORD, {
+const USERNAME = process.env.BDUSERNAME
+const sequelize = new Sequelize('tp_desarrollo_mod', USERNAME, PASSWORD, {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306
