@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { OrdersController } from '../controllers/orders.js'
-import { validateToken } from '../middlewares/token.js'
+import { isAdmin, validateToken } from '../middlewares/token.js'
 
 export const createOrderRouter = ({ orderModel }) => {
   const ordersRouter = Router()
@@ -8,8 +8,8 @@ export const createOrderRouter = ({ orderModel }) => {
   const ordersController = new OrdersController({ orderModel })
 
   ordersRouter.post('/', validateToken, ordersController.createOrder)
-  ordersRouter.get('/', validateToken, ordersController.getAll)
-  ordersRouter.delete('/:id', validateToken, ordersController.deleteOrder)
-  ordersRouter.patch('/:id',validateToken, ordersController.modifyOrder)
+  ordersRouter.get('/', validateToken, isAdmin, ordersController.getAll)
+  ordersRouter.delete('/:id', validateToken, isAdmin, ordersController.deleteOrder)
+  ordersRouter.patch('/:id', validateToken, isAdmin, ordersController.modifyOrder)
   return ordersRouter
 }

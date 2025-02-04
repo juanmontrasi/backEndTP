@@ -22,10 +22,15 @@ export const validateToken = (req, res, next) => {
     if (err) {
       return res.status(401).json({ message: 'Su sesión expiro, ingrese nuevamente' })
     }
-    if (user.tipo_usuario !== ROLES.ADMIN) {
-      return res.status(403).json({ message: 'No tienes permisos para esta acción' })
-    }
     req.user = user
     next()
   });
+}
+
+export const isAdmin = (req, res, next) => {
+  if (req.user.tipo_usuario === ROLES.ADMIN) {
+    next()
+  } else {
+    return res.status(403).json({ message: 'No tiene permisos para realizar esta acción' })
+  }
 }

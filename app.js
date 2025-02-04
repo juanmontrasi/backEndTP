@@ -19,10 +19,10 @@ export const createApp = ({ userModel, orderModel, productModel, orderProductsMo
   app.use('/orders', createOrderRouter({ orderModel }))
   app.use('/products', createProductRouter({ productModel }))
   app.use('/orders/products', createOrderProductsRouter({ orderProductsModel }))
-  app.use('/checkout', createCheckoutRouter({ orderModel}))
+  app.use('/checkout', createCheckoutRouter({ orderModel }))
 
 
-  const PORT = 7272
+  const PORT = process.env.PORT || 7272
   app.listen(PORT, () => {
     console.log(`server listening on port http://localhost:${PORT}`)
   }) // el servidor se pone a esperar requests http
