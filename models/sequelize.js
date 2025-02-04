@@ -9,8 +9,8 @@ if (!process.env.BDPASSWORD) {
 
 const PASSWORD = process.env.BDPASSWORD
 const USERNAME = process.env.BDUSERNAME
-const DATABASENAME = process.env.DBNAME
-const DATABASEHOST = process.env.DBHOST
+const DATABASENAME = process.env.BDNAME
+const DATABASEHOST = process.env.BDHOST
 const sequelize = new Sequelize(DATABASENAME, USERNAME, PASSWORD, {
   host: DATABASEHOST,
   dialect: 'mysql',

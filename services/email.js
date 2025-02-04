@@ -10,9 +10,7 @@ export class EmailService {
     sendReceipt = async (user, order, items) => {
         try {
             const filePath = await this.generatePdfReceipt(user, order, items);
-            console.log('Enviando recibo a:', user.email);
             await this.sendEmail(user, filePath);
-            console.log('Enviando recibo a:', user.email);
             this.deleteTemporalFile(filePath);
 
             return true;
@@ -102,7 +100,6 @@ export class EmailService {
 
         try {
             const info = await transporter.sendMail(mailOptions);
-            console.log('Correo enviado:', info);
         } catch (error) {
             console.error('Error al enviar el correo:', error);
         }
