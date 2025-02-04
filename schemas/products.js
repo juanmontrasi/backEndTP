@@ -5,7 +5,7 @@ const productSchema = z.object({    // define como una plantilla que tiene que s
   nombre_producto: z.string({
     invalid_type_error: 'Nombre de Producto debe ser texto',
     required_error: 'Nombre de Producto requerido'
-  }),
+  }), 
 
   desc_producto: z.string({
     invalid_type_error: 'Descripción de Producto debe ser texto',

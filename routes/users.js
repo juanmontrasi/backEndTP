@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { UserController } from '../controllers/users.js'
+import { validateToken } from "../middlewares/token.js"
 
 export const createUserRouter = ({ userModel }) => {
   const userRouter = Router()
@@ -7,9 +8,9 @@ export const createUserRouter = ({ userModel }) => {
   const userController = new UserController({ userModel })
   userRouter.get('/', userController.getAllUsers)
   userRouter.get('/:id', userController.getUserById)
-  userRouter.delete('/:id', userController.deleteUserById)
+  userRouter.delete('/:id', validateToken, userController.deleteUserById)
   userRouter.post('/', userController.createUser)
-  userRouter.patch('/:id', userController.modifyUser)
+  userRouter.patch('/:id', validateToken,userController.modifyUser)
 
   return userRouter
 }

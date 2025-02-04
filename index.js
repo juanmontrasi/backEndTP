@@ -5,7 +5,7 @@ import { productModel } from './models/products.js'
 import { orderProductsModel } from './models/orders-products.js'
 
 
-createApp({ // punto de entrada de la aplicacion
+createApp({
   userModel: userModel,
   orderModel: orderModel,
   productModel: productModel,
