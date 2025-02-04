@@ -28,34 +28,43 @@ export class ProductController {
   }
 
   createProduct = async (req, res) => {
-    console.log(req.body)
     const result = validateProduct(req.body)
 
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-    const newProduct = await this.productModel.create({
-      nombre_producto: result.data.nombre_producto,  //agregada
-      desc_producto: result.data.desc_producto,
-      precio: result.data.precio,
-      stock: result.data.stock,
-      imagen: result.data.imagen
-    })
-    res.status(201).json(newProduct)
+    try {
+      const newProduct = await this.productModel.create({
+        nombre_producto: result.data.nombre_producto,  //agregada
+        desc_producto: result.data.desc_producto,
+        precio: result.data.precio,
+        stock: result.data.stock,
+        imagen: result.data.imagen
+      })
+      res.status(201).json(newProduct)
+    } catch {
+      res.status(400).send({ error: JSON.parse(result.error.message) })
+    }
+
   }
 
   deleteProductById = async (req, res) => {
-    const { id } = req.params
-    const product = await this.productModel.destroy({
-      where: {
-        id_productos: id,
-      },
-    })
-    if (product) {
-      res.json({ message: 'Producto eliminado exitosamente' })
-    } else {
-      res.status(404).send({ message: 'Producto no encontrado' })
+    try {
+      const { id } = req.params
+      const product = await this.productModel.destroy({
+        where: {
+          id_productos: id,
+        },
+      })
+      if (product) {
+        res.json({ message: 'Producto eliminado exitosamente' })
+      } else {
+        res.status(404).send({ message: 'Producto no encontrado' })
+      }
+    } catch {
+      res.status(400).send({ error: 'No se puede eliminar un producto que tiene ordenes asociadas' })
     }
+
   }
 
   modifyProduct = async (req, res) => {
@@ -64,26 +73,31 @@ export class ProductController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-    const { id } = req.params
 
-    const [updatedProduct] = await this.productModel.update(
-      {
-        nombre_producto: result.data.nombre_producto,
-        desc_producto: result.data.desc_producto,
-        precio: result.data.precio,
-        stock: result.data.stock,
-        imagen: result.data.imagen
-      },
-      {
-        where: {
-          id_productos: id,
+    const { id } = req.params
+    if (req.body.stock <= 0) {
+      return res.status(400).json({ error: 'El stock no puede ser menor o igual a 0' })
+    } else {
+      const [updatedProduct] = await this.productModel.update(
+        {
+          nombre_producto: result.data.nombre_producto,
+          desc_producto: result.data.desc_producto,
+          precio: result.data.precio,
+          stock: result.data.stock,
+          imagen: result.data.imagen
         },
+        {
+          where: {
+            id_productos: id,
+          },
+        }
+      )
+      if (updatedProduct === 0) {
+        return res.status(404).json({ message: 'Producto no encontrado' });
       }
-    )
-    if (updatedProduct === 0) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
+      res.json({ message: 'Producto actualizado exitosamente' })
     }
-    res.json({ message: 'Producto actualizado exitosamente' })
+
 
   }
 

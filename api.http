@@ -53,8 +53,8 @@ POST http://localhost:1234/login
 Content-Type: application/json
 
 {
-  "nombre_usuario": "juanm",
-  "clave": "123"
+  "nombre_usuario": "admin",
+  "clave": "admin"
 }
 
 //// Requests de Pedidos

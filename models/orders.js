@@ -27,7 +27,12 @@ export const orderModel = sequelize.define(
     id_cliente: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
+
+    estado: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     timestamps: false,
