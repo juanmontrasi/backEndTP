@@ -33,7 +33,7 @@ export class ProductController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-    try{
+    try {
       const newProduct = await this.productModel.create({
         nombre_producto: result.data.nombre_producto,  //agregada
         desc_producto: result.data.desc_producto,
@@ -42,14 +42,14 @@ export class ProductController {
         imagen: result.data.imagen
       })
       res.status(201).json(newProduct)
-    }catch{
+    } catch {
       res.status(400).send({ error: JSON.parse(result.error.message) })
     }
-    
+
   }
 
   deleteProductById = async (req, res) => {
-    try{
+    try {
       const { id } = req.params
       const product = await this.productModel.destroy({
         where: {
@@ -61,10 +61,10 @@ export class ProductController {
       } else {
         res.status(404).send({ message: 'Producto no encontrado' })
       }
-    }catch {
+    } catch {
       res.status(400).send({ error: 'No se puede eliminar un producto que tiene ordenes asociadas' })
     }
-    
+
   }
 
   modifyProduct = async (req, res) => {
@@ -74,12 +74,10 @@ export class ProductController {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
-    console.log(req.params)
-
     const { id } = req.params
-    if(req.body.stock <= 0){
+    if (req.body.stock <= 0) {
       return res.status(400).json({ error: 'El stock no puede ser menor o igual a 0' })
-    }else{ 
+    } else {
       const [updatedProduct] = await this.productModel.update(
         {
           nombre_producto: result.data.nombre_producto,
@@ -99,7 +97,7 @@ export class ProductController {
       }
       res.json({ message: 'Producto actualizado exitosamente' })
     }
-    
+
 
   }
 

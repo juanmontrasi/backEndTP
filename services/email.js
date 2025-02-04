@@ -17,12 +17,12 @@ export class EmailService {
 
             return true;
         } catch (error) {
-            return false;       
+            return false;
         }
 
     }
 
-    generatePdfReceipt= async (user, order, items) => {  
+    generatePdfReceipt = async (user, order, items) => {
         // Crear el recibo en PDF
         const doc = new PDFDocument();
         const filePath = path.join(process.cwd(), `recibo-${Date.now()}.pdf`);
@@ -30,22 +30,24 @@ export class EmailService {
         doc.pipe(stream);
 
         // Encabezado
-        doc.fontSize(20).text('Recibo de Compra', { align: 'center' });
+        doc.fontSize(30).text('Recibo de Compra', { align: 'center' });
         doc.moveDown();
-        doc.fontSize(14).text(`Pedido: ${order.id_pedidos}`, { align: 'center' });
-        doc.fontSize(14).text(`Cliente: ${user.nombre}`, { align: 'center' });
-        doc.text(`Correo: ${user.email}`, { align: 'center' });
-        doc.text(`Fecha: ${new Date().toLocaleDateString()}`, { align: 'center' });
-        doc.text(`Total: $${order.total}`, { align: 'center' });
+        doc.fontSize(14).text(`Pedido: ${order.id_pedidos}`);
+        doc.fontSize(14).text(`Cliente: ${user.nombre}`);
+        doc.text(`Correo: ${user.email}`);
+        doc.text(`Fecha: ${new Date().toLocaleDateString()}`);
+        doc.text(`Total: $${order.total}`);
         doc.moveDown();
 
         // Detalle de los productos
-        doc.fontSize(14).text('Detalles de la compra:');
-        items.forEach((item, index) => { // Cambio aquí
-            doc.text(`${index + 1}. ${item.nombre_producto} - $${item.precio} x ${item.cantidad} = $${item.subtotal}`);
+        doc.fontSize(14).text('----------------------------------------------------------------------------------------------------');
+        doc.fontSize(16).text('Detalles de la compra:');
+        doc.moveDown()
+        items.forEach((item, index) => {
+            doc.fontSize(14).text(`${index + 1}. ${item.nombre_producto} - $${item.precio} x ${item.cantidad} = $${item.subtotal}`);
         });
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 19; i++) {
             doc.moveDown();
         }
         doc.fontSize(10).text('Gracias por elegirnos. Recuerda que puedes retirar tu pedido en nuestra tienda ubicada en Pasco 1980 de lunes a viernes de 8 AM a 5 PM.', { align: 'center' });
@@ -56,9 +58,7 @@ export class EmailService {
         doc.text('CompraGamer - Teléfono: (123) 456-7890 - Email: compragamersa@gmail.com', { align: 'center' });
         doc.end();
 
-        // Esperar a que se genere el archivo
         await new Promise((resolve) => stream.on('finish', resolve));
-        console.log(filePath)
         return filePath;
     }
 
@@ -71,8 +71,8 @@ export class EmailService {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL,  // Cambia esto a tu correo
-                pass: process.env.PASSWORD,  // Contraseña de aplicación generada
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD,
             },
         });
         // Configuración del correo

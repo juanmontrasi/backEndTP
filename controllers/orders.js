@@ -10,13 +10,13 @@ export class OrdersController {
     this.orderModel = orderModel
   }
 
-  
+
 
   createOrder = async (req, res) => {
     const { id_cliente, total } = req.body
     const fechaHoy = new Date()
     const estado = 'En proceso'
-    if(total === 0){
+    if (total === 0) {
       return res.status(400).json({ error: 'El total no puede ser 0' })
     }
     try {
@@ -40,27 +40,27 @@ export class OrdersController {
     try {
       const orders = await this.orderModel.findAll({
         where: {
-            id_pedidos: id_pedidos,
+          id_pedidos: id_pedidos,
         },
         include: [
-          
-            {
-                model: orderProductsModel,
-                attributes: ['id_producto', 'cantidad', 'subtotal'],
-                include: [
-                    {
-                        model: productModel,
-                        attributes: ['nombre_producto', 'precio'],
-                    },
-                ],
-            },
-            {
-                model: userModel,
-                attributes: ['nombre', 'apellido', 'email'],
-            },
+
+          {
+            model: orderProductsModel,
+            attributes: ['id_producto', 'cantidad', 'subtotal'],
+            include: [
+              {
+                model: productModel,
+                attributes: ['nombre_producto', 'precio'],
+              },
+            ],
+          },
+          {
+            model: userModel,
+            attributes: ['nombre', 'apellido', 'email'],
+          },
         ],
-    })
-    return orders
+      })
+      return orders
     }
     catch (error) {
       console.log(error)
@@ -82,7 +82,7 @@ export class OrdersController {
             ],
           },
           {
-            model: userModel, 
+            model: userModel,
             attributes: ['nombre', 'email'],
           },
         ],
@@ -91,8 +91,8 @@ export class OrdersController {
 
       if (orders.length > 0) {
         orders.sort((a, b) => {
-          if(a.fecha_pedido === b.fecha_pedido) return 0
-          if(a.fecha_pedido > b.fecha_pedido) return -1
+          if (a.fecha_pedido === b.fecha_pedido) return 0
+          if (a.fecha_pedido > b.fecha_pedido) return -1
           return 1
         })
         res.json(orders)
@@ -105,29 +105,29 @@ export class OrdersController {
   };
 
   deleteOrder = async (req, res) => {
-    const {id} = req.params
+    const { id } = req.params
 
-    try{
+    try {
       const order = await this.orderModel.destroy({
         where: {
           id_pedidos: id,
-        },  
+        },
       })
-      if(order){
+      if (order) {
         res.json({ message: 'Pedido eliminado exitosamente' })
       }
-    }catch (error) {
+    } catch (error) {
       res.status(400).json({ error: 'Error eliminando el pedido' })
     }
   }
 
   modifyOrder = async (req, res) => {
-    const result =  validatePartialOrder(req.body)
+    const result = validatePartialOrder(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
-    const estado = result.data.estado === 'En proceso' ? 'Entregado' : 'En proceso' 
+    const estado = result.data.estado === 'En proceso' ? 'Entregado' : 'En proceso'
     const fechaPedido = new Date(this.convertToUTC(result.data.fecha_pedido));
     try {
 
@@ -148,7 +148,6 @@ export class OrdersController {
         res.json({ message: 'Pedido modificado exitosamente' })
       }
     } catch (error) {
-      console.log(error)
       res.status(400).json({ error: 'error modificando el pedido' })
     }
   }

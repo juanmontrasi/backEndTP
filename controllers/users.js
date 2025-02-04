@@ -87,7 +87,6 @@ export class UserController {
         res.status(404).send({ message: 'Usuario no encontrado' })
       }
     } catch (error) {
-      console.log(error)
       res.status(400).send({ message: 'Error al eliminar el usuario' })
     }
 
