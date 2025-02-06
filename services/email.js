@@ -23,12 +23,12 @@ export class EmailService {
     generatePdfReceipt = async (user, order, items) => {
         // Crear el recibo en PDF
         const doc = new PDFDocument();
-        const filePath = path.join(process.cwd(), `recibo-${Date.now()}.pdf`);
+        const filePath = path.join(process.cwd(), `Confirmacion-${Date.now()}.pdf`);
         const stream = fs.createWriteStream(filePath);
         doc.pipe(stream);
 
         // Encabezado
-        doc.fontSize(30).text('Recibo de Compra', { align: 'center' });
+        doc.fontSize(30).text('Confirmación de Pedido', { align: 'center' });
         doc.moveDown();
         doc.fontSize(14).text(`Pedido: ${order.id_pedidos}`);
         doc.fontSize(14).text(`Cliente: ${user.nombre}`);
@@ -77,10 +77,10 @@ export class EmailService {
         const mailOptions = {
             from: process.env.EMAIL,
             to: user.email,
-            subject: 'Recibo de tu compra',
+            subject: 'Confirmación de tu compra',
             text: `Estimado/a ${user.nombre},
 
-        ¡Gracias por tu compra en CompraGamer! Adjunto encontrarás el recibo de tu compra.
+        ¡Gracias por tu compra en CompraGamer! Adjunto encontrarás la confirmación de tu compra.
             
         Te recordamos que podrás retirar y pagar por tu pedido en nuestro local, ubicado en Pasco 1980, de lunes a viernes de 8AM a 5PM. 
             
@@ -92,7 +92,7 @@ export class EmailService {
         El equipo de CompraGamer`,
             attachments: [
                 {
-                    filename: 'Recibo-Compra.pdf',
+                    filename: 'Confirmación-Compra.pdf',
                     path: filePath,
                 },
             ],

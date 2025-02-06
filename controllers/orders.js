@@ -16,6 +16,7 @@ export class OrdersController {
     const { id_cliente, total } = req.body
     const fechaHoy = new Date()
     const estado = 'En proceso'
+    const estado_pago = 'No pago'
     if (total === 0) {
       return res.status(400).json({ error: 'El total no puede ser 0' })
     }
@@ -24,7 +25,8 @@ export class OrdersController {
         fecha_pedido: fechaHoy,
         id_cliente,
         total,
-        estado
+        estado,
+        estado_pago
       })
       if (newOrder) {
         res.status(201).json(newOrder);
@@ -126,8 +128,15 @@ export class OrdersController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
+    if (req.body.estado_pago !== 'No pago' && req.body.estado_pago !== 'Pagado') {
+      return res.status(400).json({ error: 'El estado de pago debe ser Pagado o No pago' })
+    }
+    if (req.body.estado !== 'En proceso' && req.body.estado !== 'Entregado') {
+      return res.status(400).json({ error: 'El estado debe ser En proceso o Entregado' })
+    }
     const { id } = req.params
-    const estado = result.data.estado === 'En proceso' ? 'Entregado' : 'En proceso'
+    const estado = req.body.estado
+    const estado_pago = req.body.estado_pago
     const fechaPedido = new Date(this.convertToUTC(result.data.fecha_pedido));
     try {
 
@@ -137,6 +146,7 @@ export class OrdersController {
           total: result.data.total,
           id_cliente: result.data.id_cliente,
           estado: estado,
+          estado_pago: estado_pago
         },
         {
           where: {

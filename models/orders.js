@@ -33,6 +33,10 @@ export const orderModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    estado_pago: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     timestamps: false,
