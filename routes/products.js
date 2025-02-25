@@ -13,6 +13,7 @@ export const createProductRouter = ({ productModel }) => {
   productRouter.delete('/:id', validateToken, isAdmin, productController.deleteProductById)
   productRouter.post('/', validateToken, isAdmin, productController.createProduct)
   productRouter.patch('/:id', validateToken, productController.modifyProduct)
+  productRouter.get('/quantity/stock', validateToken, isAdmin, productController.getProductsQuantity)
 
 
   return productRouter

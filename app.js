@@ -9,9 +9,9 @@ import { createCheckoutRouter } from './routes/checkout.js'
 
 
 export const createApp = ({ userModel, orderModel, productModel, orderProductsModel }) => {
-  const app = express() // crea la app
+  const app = express()
   app.use(corsMiddleware())
-  app.use(json()) // pasar por los middlewares
+  app.use(json())
   app.disable('x-powered-by')
 
   app.use('/users', createUserRouter({ userModel }))
@@ -25,5 +25,5 @@ export const createApp = ({ userModel, orderModel, productModel, orderProductsMo
   const PORT = process.env.PORT || 7272
   app.listen(PORT, () => {
     console.log(`server listening on port http://localhost:${PORT}`)
-  }) // el servidor se pone a esperar requests http
+  })
 }

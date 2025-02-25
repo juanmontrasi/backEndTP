@@ -128,15 +128,11 @@ export class OrdersController {
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
-    if (req.body.estado_pago !== 'No pago' && req.body.estado_pago !== 'Pagado') {
-      return res.status(400).json({ error: 'El estado de pago debe ser Pagado o No pago' })
-    }
     if (req.body.estado !== 'En proceso' && req.body.estado !== 'Entregado') {
       return res.status(400).json({ error: 'El estado debe ser En proceso o Entregado' })
     }
     const { id } = req.params
     const estado = req.body.estado
-    const estado_pago = req.body.estado_pago
     const fechaPedido = new Date(this.convertToUTC(result.data.fecha_pedido));
     try {
 
@@ -146,7 +142,7 @@ export class OrdersController {
           total: result.data.total,
           id_cliente: result.data.id_cliente,
           estado: estado,
-          estado_pago: estado_pago
+          estado_pago: result.estado_pago
         },
         {
           where: {
@@ -169,5 +165,17 @@ export class OrdersController {
     const formattedFechaPedido = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}`
 
     return formattedFechaPedido
+  }
+
+  getOrdersQuantityAndTotal = async (req, res) => {
+    try {
+      const orders = await this.orderModel.findAll()
+      const pendingOrders = orders.filter(order => order.estado === 'En proceso')
+      const deliveredOrders = orders.filter(order => order.estado === 'Entregado')
+      const ordersTotal = orders.reduce((acc, order) => acc + order.total, 0)
+      res.json({ total: ordersTotal, pendingOrders: pendingOrders.length, deliveredOrders: deliveredOrders.length })
+    } catch (error) {
+      res.status(400).json({ total: 0, pendingOrders: 0, deliveredOrders: 0 })
+    }
   }
 }

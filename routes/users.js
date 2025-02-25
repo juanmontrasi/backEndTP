@@ -11,6 +11,7 @@ export const createUserRouter = ({ userModel }) => {
   userRouter.delete('/:id', validateToken, isAdmin, userController.deleteUserById)
   userRouter.post('/', userController.createUser)
   userRouter.patch('/:id', validateToken, userController.modifyUser)
+  userRouter.get('/clients/quantity', validateToken, isAdmin, userController.getClientsQuantity)
 
   return userRouter
 }

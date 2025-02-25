@@ -198,6 +198,20 @@ export class UserController {
     }
 
   }
+
+  getClientsQuantity = async (req, res) => {
+    const clients = await this.userModel.count({
+      where: {
+        tipo_usuario: 2,
+      },
+    })
+    if (clients) {
+      res.status(200).json(clients)
+    }
+    else {
+      res.status(404).send(0)
+    }
+  }
 }
 
 

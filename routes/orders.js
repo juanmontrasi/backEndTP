@@ -11,5 +11,6 @@ export const createOrderRouter = ({ orderModel }) => {
   ordersRouter.get('/', validateToken, isAdmin, ordersController.getAll)
   ordersRouter.delete('/:id', validateToken, isAdmin, ordersController.deleteOrder)
   ordersRouter.patch('/:id', validateToken, isAdmin, ordersController.modifyOrder)
+  ordersRouter.get('/quantity', validateToken, isAdmin, ordersController.getOrdersQuantityAndTotal)
   return ordersRouter
 }

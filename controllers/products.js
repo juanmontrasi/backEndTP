@@ -117,4 +117,13 @@ export class ProductController {
     }
 
   }
+
+  getProductsQuantity = async (req, res) => {
+    try {
+      const quantity = await this.productModel.count()
+      res.status(200).json(quantity)
+    } catch (error) {
+      res.status(500).send(0)
+    }
+  }
 }

@@ -210,3 +210,11 @@ Content-Type: application/json
 {
   "mensaje": "Se necesita arreglar el trackpad"
 }
+
+### Cantidad de clientes
+GET http://localhost:7272/users/clients/quantity
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvcyI6NjcsInRpcG9fdXN1YXJpbyI6MSwidXNlck5hbWUiOiJhZG1pbiIsImlhdCI6MTc0MDQ5NDQ2NywiZXhwIjoxNzQwNDk4MDY3fQ.uKQ7WVRLszFP7BT-gJM8xxPftBJJG2DkuhJdEdGhcUk
+
+### Cantidad de servicios	
+GET http://localhost:7272/products/quantity/stock
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvcyI6NjcsInRpcG9fdXN1YXJpbyI6MSwidXNlck5hbWUiOiJhZG1pbiIsImlhdCI6MTc0MDQ5NjMwNywiZXhwIjoxNzQwNDk5OTA3fQ.xsublIVMnC523gyvj2DLQ29Lez_DjSmn6TAr81BAv2Q

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { OrderProductsController } from '../controllers/orders-products.js';
-import { validateToken } from '../middlewares/token.js';
+import { validateToken, isAdmin } from '../middlewares/token.js';
 
 export const createOrderProductsRouter = ({ orderProductsModel }) => {
   const orderProductsRouter = Router();
@@ -10,5 +10,6 @@ export const createOrderProductsRouter = ({ orderProductsModel }) => {
   });
 
   orderProductsRouter.post('/', validateToken, orderProductsController.createOrderProduct);
+  orderProductsRouter.get('/', validateToken, isAdmin, orderProductsController.getProductsQuantity);
   return orderProductsRouter;
 };
